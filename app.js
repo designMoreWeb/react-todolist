@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Platform, ListView, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Platform, ListView, Keyboard, AsyncStorage } from 'react-native';
 import Header from './header';
 import Footer from './footer';
 import Row from './row';
@@ -30,12 +30,23 @@ class App extends Component{
      this.handleAddItem = this.handleAddItem.bind(this);
      this.handleToggleAllComplete = this.handleToggleAllComplete.bind(this);
    }
+   componentWillMount() {
+      AsyncStorage.getItem("items").then((json) => {
+         try{
+            const items= JSON.parse(json);
+            this.setSource(items, items);
+         }catch(e) {
+
+         }
+      })
+   }
    setSource(items, itemsDataSource, otherState = {}){
       this.setState({
          items,
          dataSource: this.state.dataSource.cloneWithRows(itemsDataSource),
          ...otherState
       })
+      AsyncStorage.setItem("items", JSON.stringify(items));
    }
    handleClearComplete(){
       const newItems = filterItems("ACTIVE", this.state.items);
