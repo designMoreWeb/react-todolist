@@ -26,7 +26,8 @@ const styles =StyleSheet.create({
       paddingHorizontal: 16,
       flexDirection: "row",
       justifyContent:"space-around",
-      alignItems:"center"
+      alignItems:"center",
+      backgroundColor:'#FF6600'
    },
       toggleIcon:{
          fontSize: 30,
